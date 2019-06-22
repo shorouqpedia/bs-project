@@ -207,54 +207,7 @@ END;
 }
 
 ?>
-
-
-<html>
-	<head>
- 		<title>DSheldon-Search</title>
- 		<meta charset="utf-8">
- 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<!-- Second Meta is Internet Explorer Compatibility and second is Third Mobile Meta -->
- 		<link rel="stylesheet" href="D:\Graduation Project\BS Project\css\bootstrap.css">
- 		<link rel="stylesheet" href="css\style.css">
- 		
- 	</head>
- 	<body>
- 		<!--Start Navbar-->
-		<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
-
-			<div class="container-fluid">
-			    <!-- Brand and toggle get grouped for better mobile display -->
-			    <div class="navbar-header">
-			      <a class="navbar-brand" href="#"> <img src="../images/DS2.png"> </a>
-			    </div>
-			
-			    <!-- Collect the nav links, forms, and other content for toggling -->
-			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-			    	<form class="navbar-form navbar-left" style="padding-top: 8px">
-			    		<div class="row">
-						    <div class="col-lg-6">
-							    <div class="input-group">
-								    <span class="input-group-btn">
-								    	<button type="button" class="btn btn-default" aria-label="Left Align">
-  											<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-										</button>
-								    </span>
-							    	<input type="text" class="form-control" placeholder="Search for...">
-							    </div><!-- /input-group -->
-						    </div><!-- /.col-lg-6 -->
-					    </div>
-
-			    	</form>
-			    	
-			    </div><!-- /.navbar-collapse -->
-
-			</div><!-- /.container-fluid -->
-			  <!-- End of the Container-->
-		</nav>
-		<!--End Navbar-->
+<?php require_once "../partials/headers.php";?>
         <?php foreach($videos as $video) { ?>
 		<!--First Video-->
         <div class="row" style="padding: 100px; padding-left: 200px; padding-bottom: 0px; margin-bottom: 50px;padding-top: 0px;">
@@ -289,7 +242,4 @@ END;
 		<!----------------------------------------------->
         <?php } ?>
 		<!--End First Video-->
- 		<script src="js\jquery-1.11.1.min.js"></script>
- 		<script src="js\bootstrap.min.js"></script>
- 	</body>
-</html>
+<?php require_once "../partials/footer.php";?>

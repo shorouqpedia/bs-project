@@ -1,0 +1,228 @@
+body
+{
+    height:100%;
+    margin:0px;
+    /*background-color: rgba(252, 253, 149, 0.3)*/
+}
+
+a:hover
+{
+    text-decoration: none;
+    color: black;
+}
+
+a
+{
+    color: black;
+}
+/*Navbar*/
+
+ .navbar-inverse
+ {
+    background-color: #364D67;
+    /*background-color: #00BD23;*/
+    border: none;
+    padding: 10px; /*Edit*/
+    padding-top: 10px; /*Edit*/
+    padding-left: 10px; /*Edit*/
+    padding-bottom: 0px; /*Edit*/
+ }
+
+ .navbar-inverse .navbar-nav > li > a{
+    color: white;
+    height: 60px;
+ }
+
+ .navbar > .container .navbar-brand, 
+ .navbar > .container-fluid .navbar-brand {
+    margin-left: -15px;
+    padding: 0px;
+}
+
+.navbar-brand > img
+{
+    height: 28px; /*Edit*/
+    width: 43px; /*Edit*/
+    padding: 0px; /*Edit*/
+    margin-top: 4px; /*Edit*/
+    margin-right: 10px; /*Edit*/
+}
+
+/*search box*/
+.navbar-form .input-group > .form-control 
+{
+    width: 350px;
+    transition: background .15s,color .15s;
+    color: black;
+    padding-right: 5px;
+    padding-bottom: 6px;
+    padding-left: 10px;
+    margin-left: 50px; /*Edit*/
+    /*background: rgba(104, 104, 104,0.5);*/
+    /*background: rgba(236, 151, 32,0.7);;*/
+    font-weight: 400;
+    font-size: 15px;
+    height: 36px;
+    border: 0;
+    margin-top: -15px; /*Edit*/
+    width: 450px;
+    font-size: 20px;
+}
+
+
+/*search botton*/
+.glyphicon-search:before 
+{    
+    transition: color .15s;
+    position: absolute;
+    font-size: 17px;
+    /*color: #919191;*/
+    /*color: #ffbf66;*/
+    color: #89A9CE;
+    left: -10px;
+    top: -10px;
+}
+
+/*box of the botton*/
+.input-group .form-control:first-child, 
+.input-group-addon:first-child,
+.input-group-btn:first-child > .btn, 
+.input-group-btn:first-child > .btn-group > .btn, 
+.input-group-btn:first-child > .dropdown-toggle, 
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle), 
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn 
+{
+    position: absolute;
+    top: -15px; /*Edit*/
+    left: -60px; /*Edit*/
+    margin-left: 50px;
+    border:0;
+    color: black;
+    /*background-color: rgba(50, 50, 50);*/
+    /*background-color:#EC9720;*/
+    background-color: #5A7696;
+    height: 36px;
+    width: 60px;
+}
+
+/*right buttons*/
+.btn-primary 
+{
+    margin-top: 2px; /*Edit*/
+    width: 120px;
+    height: 34px;
+}
+/*right buttons end*/
+/*Navbar End*/
+
+/*slide start*/
+/*slide frame*/
+.carousel,.item,.active
+{
+    height:100%;
+}
+
+/*photos in the slide*/
+.carousel-inner
+{
+    height:100%;
+}
+
+
+/*right and left in slide*/
+.glyphicon-chevron-left:before {
+    color: transparent;
+}
+
+.glyphicon-chevron-right:before {
+    color: transparent;
+}
+
+/*indicators in slide*/
+.carousel-indicators .active {
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    background-color: white;
+    border-color: white;
+}
+
+.carousel-indicators li {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #000 \9;
+    background-color: rgba(0, 0, 0, 0);
+    border: 3px solid white;
+    border-radius: 10px;
+}
+
+#dsheldon 
+{
+    position: absolute;
+    top: -400px;
+    left: 200px;
+    height: 95px;
+}
+
+/*slide*/
+
+/*video*/
+/*border of title and descriptio*/
+.panel-warning {
+    border-color: #ec9720;
+}
+
+.panel-footer {
+    background-color: rgba(236, 151, 32,0.3);
+    border-top: 0;
+    
+}
+/*end video*/
+
+/*rating*/
+.rating 
+{
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+    font-size:20px;
+    color: #FFCA00;
+}
+.rating-star 
+{
+    padding: 0 5px;
+    margin: 0;
+    cursor: pointer;
+    display: block;
+    float: right;
+}
+.rating-star:after 
+{
+    position: relative;
+    font-family: FontAwesome;
+    content:'\f006';
+}
+            
+.rating-star.checked ~ .rating-star:after,
+.rating-star.checked:after 
+{
+    content:'\f005';
+}
+            
+.rating:hover .rating-star:after 
+{
+    content:'\f006';
+}
+            
+.rating-star:hover ~ .rating-star:after, 
+.rating-star:hover:after 
+{
+    content:'\f005' !important;
+}
+
+
+/*endrating*/

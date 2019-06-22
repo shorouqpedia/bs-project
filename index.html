@@ -1,0 +1,114 @@
+<html>
+	<head>
+ 		<title>DSheldon</title>
+ 		<meta charset="utf-8">
+ 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<!-- Second Meta is Internet Explorer Compatibility and second is Third Mobile Meta -->
+ 		<link rel="stylesheet" href="css/bootstrap.css">
+ 		<link rel="stylesheet" href="css/style.css">
+ 		
+ 	</head>
+ 	<body>
+ 		<!--Start Navbar-->
+		<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" id="index-navbar" style="background-color: transparent;">
+
+			<div class="container-fluid">
+			    <!-- Brand and toggle get grouped for better mobile display -->
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#"> <img src="images/DS2.png"> </a>
+			    </div>
+			
+			    <!-- Collect the nav links, forms, and other content for toggling -->
+			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+			    	<form class="navbar-form navbar-left" style="padding-top: 8px" action="results/list-LoggedIn.php">
+			    		<div class="row">
+						    <div class="col-lg-6">
+							    <div class="input-group">
+								    <span class="input-group-btn">
+								    	<button type="button" class="btn btn-default" aria-label="Left Align">
+  											<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+										</button>
+								    </span>
+							    	<input type="text" class="form-control" placeholder="Search for..." name="q">
+							    </div><!-- /input-group -->
+						    </div><!-- /.col-lg-6 -->
+					    </div>
+
+			    	</form>
+			    </div><!-- /.navbar-collapse -->
+
+			</div><!-- /.container-fluid -->
+			  <!-- End of the Container-->
+		</nav>
+		<!--End Navbar-->
+
+		<!--Start Carousel-->
+		<div id="myslide" class="carousel slide" data-ride="carousel">
+			  <!-- Indicators: the circle that changes color when its slide is showing 0,1,2 'cause three slides with three circles-->
+
+			<ol class="carousel-indicators">
+				<li data-target="#myslide" data-slide-to="0" class="active">
+				</li> 
+				<li data-target="#myslide" data-slide-to="1">
+				</li>
+				<li data-target="#myslide" data-slide-to="2">
+				</li>
+			</ol>					
+
+			  <!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+			  		<img class="img-responsive center-block" src="images/slide1.jpg">
+			  		<div class="carousel-caption">
+			  			<div>
+			  				<img class="img-responsive center-block" src="images/DSHELDON.png" style="position: absolute; top:-400px; left: 200px; height: 95px;">
+			  			</div>
+			    	    <div>
+			    	    	<p style="position: absolute; top: -320px; left: 270px; font-size: 18px;">
+			    	    		A community of dedicated learners.
+			    	    	</p>
+			    	    </div>
+						<div style="position: absolute;top:-250px; left:210px;width: 400px;">
+							<button type="button" class="btn btn-warning btn-lg btn-block" onclick="location.href='signup.html'">Sign Up</button>
+							<button type="button" class="btn btn-default btn-lg btn-block" onclick="location.href='login.html'">Log In</button>
+						</div>		    	    
+			    	</div>
+			    </div>
+			    <div class="item">
+			    	<img class="img-responsive center-block" src="images/slide2.jpg">
+			    	<div class="carousel-caption">
+			    	    <p style="position: absolute; top: -350px; left: 30px; font-size: 18px;background-color: rgba(0,0,0,0.6);padding:50px;">
+			    	    	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			    	    </p>
+			    	</div>
+			    </div>
+			    <div class="item">
+			    	<img class="img-responsive center-block" src="images/slide3.jpg">
+			    	<div class="carousel-caption">
+			    	    <div>
+			  				<h1 style="position: absolute; top: -365px; left: 210px; height: 95px;">
+			  					Now you're all cought up,
+			  				</h1>
+			  			</div>
+			  			<div>
+			    	    	<p style="position: absolute; top: -295px; left: 320px; font-size: 18px;">
+			    	    		join to our community.
+			    	    	</p>
+			    	    </div>`
+						<div style="position: absolute;top:-250px; left:210px;width: 400px;">
+							<button type="button" class="btn btn-warning btn-lg btn-block" onclick="location.href='signup.html'" >Sign Up</button>
+							<button type="button" class="btn btn-default btn-lg btn-block" onclick="location.href='login.html'">Log In</button>
+						</div>
+			    	</div>
+			    </div>
+			</div>
+		</div>
+		<!--End Carousel-->
+
+ 		<script src="js/jquery-1.11.1.min.js"></script>
+ 		<script src="js/bootstrap.min.js"></script>
+ 		<script src="js/plugins.js"></script>
+ 	</body>
+</html>

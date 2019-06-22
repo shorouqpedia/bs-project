@@ -1,0 +1,4 @@
+#ignore folders
+vendor/
+BS Project/
+.idea/

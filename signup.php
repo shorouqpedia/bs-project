@@ -1,43 +1,7 @@
 <?php require_once 'partials/init.php';?>
-<?php $scripts = array('signup-script'); ?>
-<?php $is_signup = true; ?>
-<?php
-    session_start();
-    if (isset($_SESSION['user'])) {
-        header('Location:profile.php');
-        exit();
-    }
-if (isset($error)) {unset($error);}
-?>
+<?php $page = 'signup'; ?>
 <?php require_once "partials/headers.php";?>
 
-<?php if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-
-        if (!checkDB('user', 'email', $email)) {
-            $fname = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
-            $lname = filter_var($_POST['lname'], FILTER_SANITIZE_STRING);
-            $password = sha1(filter_var($_POST['pass'], FILTER_SANITIZE_STRING));
-            $file_upload = upload_files($_FILES['img']);
-            $img = $file_upload ? $file_upload : "images/Anon.png";
-            $query = $con->prepare("INSERT INTO `user` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
-            $query->execute(array($fname, $lname, $email, $password, $img));
-            if ($query->rowCount() > 0) {
-                $_SESSION['user'] = array(
-                    "email" => $email,
-                    "first_name" => $fname,
-                    "last_name" => $lname,
-                    "profile_picture" => $img
-                );
-                header('Location:profile.php');
-                exit();
-            }
-        } else {
-            $error = "This Email Already Exists.";
-        }
-?>
-<?php } ?>
     <style>
         .profile-userpic img {
             float: none;
@@ -49,26 +13,46 @@ if (isset($error)) {unset($error);}
             border-radius: 50% !important;
         }
     </style>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+
+        if (!checkDB('user', 'email', $email))
+        {
+
+            $fname = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
+            $lname = filter_var($_POST['lname'], FILTER_SANITIZE_STRING);
+            $password = sha1(filter_var($_POST['pass2'], FILTER_SANITIZE_STRING));
+            $img=0;
+            $query = $con->prepare("INSERT INTO `user` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
+            $query->execute(array($fname, $lname, $email, $password, $img));
+            if ($query->rowCount() > 0) 
+            {
+                header('Location:bs/index.php');
+                exit();
+            }
+        }
+        else 
+            ?>
+        <h2 style="margin-top: 80px; text-align: center">Already Exists</h2>
+<?php } else { ?>
         <div class="Container">
-            <?php if (isset($error)) {?>
-                <div class="alert alert-danger text-center">
-                    <?php echo $error;?>
-                </div>
-            <?php } ?>
             <div class="row">
                 <div class="col-xs-6 col-md-3">
                     <div class="profile-userpic" style="margin-top: 150px;margin-left: 50px;">
-                        <img src="<?php echo $images_path;?>/Anon.png" alt="..." id="item">
+                        <img src="images/Anon.png" alt="..." id="item">
                     </div>
                 </div>
                 <div class="col-xs-8">
-                    <form id="registerForm" enctype="multipart/form-data" style="border:5px; margin-top: 120px;" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                    <form style="border:5px; margin-top: 120px;" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
                         <div class="form-group">
                             <label for="exampleInputName1">First name</label>
                             <input type="text" name="fname" class="form-control" id="exampleInputName1" placeholder="First Name">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputName2">Last name</label>
+                            <label for="exampleInputName1">Last name</label>
                             <input type="text" name="lname" class="form-control" id="exampleInputName2" placeholder="Last Name">
                         </div>
                         <div class="form-group">
@@ -77,26 +61,23 @@ if (isset($error)) {unset($error);}
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword2">Confirm Password</label>
-                            <input type="password" name="passc" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password">
+                            <input type="password" name="pass2" class="form-control" id="exampleInputPassword1" placeholder="Password">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Profile photo</label>
-                            <input name="img" type="file" id="exampleInputFile">
+                            <input type="file" id="exampleInputFile">
                             <p class="help-block">Upload profile picture</p>
                         </div>
                         <div class="checkbox">
-                            <label for="terms"> Agree on Terms of Use & Privacy.
-                                <input type="checkbox" name="terms" id="terms">
+                            <label>
+                                <input type="checkbox"> DELETE IF NOT NEEDED
                             </label>
                         </div>
-                        <button id="signup-btn" type="submit" class="btn btn-warning" style="width:150px;">Submit</button>
+                        <button type="submit" class="btn btn-warning" style="width:150px;">Submit</button>
                         <button type="reset" class="btn btn-default">Cancel</button>
                     </form>
                 </div>
             </div>
         </div>
 <?php require_once "partials/footer.php"?>
+<?php } ?>

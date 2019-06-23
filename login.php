@@ -2,9 +2,11 @@
 $title = "login";
 require_once "partials/headers.php";
 session_start();
+
 if (isset($_SESSION['user'])) {
     header('Location: profile.php');
 }
+
 if (isset($error)) {unset($error);}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')

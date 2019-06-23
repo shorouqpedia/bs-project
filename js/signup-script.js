@@ -34,9 +34,10 @@ function validateForm(form) {
         }
         switch (field.attr('type')) {
             case 'text':
-                if (!(/[^A-Za-z]/).test(value)) {
+                if (!/[A-Za-z]/.test(value)) {
                     errors.push(name + " must have letters only.")
                 }
+                console.log(value);
                 break;
             case 'email':
 

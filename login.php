@@ -12,9 +12,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         if ($query->rowCount() > 0) 
         {
             $data = $query->fetchAll(PDO::FETCH_ASSOC)[0];
-            if ($password === $data['password']) 
-            {
-                $_SESSION['a'] = 1;  //what shal i do now???
+            if ($password === $data['password']) {
+                $_SESSION['user'] = array(
+                    "email" => $email,
+                    "first_name" => $data['fname'],
+                    "last_name" => $data['lname'],
+                    "profile_picture" => $data['img'],
+                    "bio" => "",
+                    "id" => $data['id']
+                );
+                header('Location: profile.php');
+
+            } else {
+                $error = "Invalid Email/Password.";
             }
         }
             header('Location: profile.php');

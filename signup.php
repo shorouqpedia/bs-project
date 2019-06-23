@@ -1,7 +1,50 @@
 <?php require_once 'partials/init.php';?>
-<?php $page = 'signup'; ?>
+
+<?php $scripts = array('signup-script'); ?>
+<?php $is_signup = true; ?>
+<?php
+    session_start();
+    $title = "signup";
+    if (isset($_SESSION['user'])) {
+        header('Location:profile.php');
+        exit();
+    }
+if (isset($error)) {unset($error);}
+?>
 <?php require_once "partials/headers.php";?>
 
+<?php if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+
+        if (!checkDB('user', 'email', $email)) {
+            $fname = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
+            $lname = filter_var($_POST['lname'], FILTER_SANITIZE_STRING);
+            $password = sha1(filter_var($_POST['pass'], FILTER_SANITIZE_STRING));
+            $file_upload = upload_files($_FILES['img']);
+            $img = $file_upload ? $file_upload : "images/Anon.png";
+            $query = $con->prepare("INSERT INTO `user` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
+            $query->execute(array($fname, $lname, $email, $password, $img));
+            if ($query->rowCount() > 0) {
+                $query2 = $con->prepare("SELECT * FROM `user` WHERE `email`=?");
+                $query2->execute(array($email));
+                $id = $query2->fetchAll(PDO::FETCH_ASSOC)[0]['id'];
+                $_SESSION['user'] = array(
+                    "email" => $email,
+                    "first_name" => $fname,
+                    "last_name" => $lname,
+                    "profile_picture" => $img,
+                    "bio" => "",
+                    "id" => $id
+                );
+                header('Location:profile.php');
+                exit();
+            }
+        } else {
+            $error = "This Email Already Exists.";
+        }
+?>
+<?php } ?>
     <style>
         .profile-userpic img {
             float: none;

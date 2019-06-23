@@ -62,8 +62,17 @@
                     </li>
                     <?php } ?>
                 <?php } else { ?>
+                    <?php if ($title != "profile") { ?>
                     <li>
                         <button type="button" class="btn btn-default" onclick="location.href='<?php echo $server_base;?>/profile.php'" style="margin-top: 2px;width: 120px">Profile</button> <!--Edit-->
+                    </li>
+                    <?php } else { ?>
+                    <li>
+                        <button type="button" class="btn btn-default" onclick="location.href='<?php echo $server_base;?>/edit.php'" style="margin-top: 2px;width: 120px">Edit Profile</button> <!--Edit-->
+                    </li>
+                    <?php } ?>
+                    <li>
+                        <button type="button" class="btn btn-danger" onclick="location.href='<?php echo $server_base;?>/logout.php'" style="margin-top: 2px;width: 120px">Logout</button> <!--Edit-->
                     </li>
                 <?php } ?>
             </ul>

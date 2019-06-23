@@ -1,20 +1,16 @@
-<?php require_once "partials/init.php";
-$title = "login";
+<?php
+require_once "partials/init.php";
 require_once "partials/headers.php";
-session_start();
-if (isset($_SESSION['user'])) {
-    header('Location: profile.php');
-}
-if (isset($error)) {unset($error);}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
+if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
         $email = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
         $password = sha1(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
 
-        $query = $con->prepare("SELECT * FROM user WHERE email = ?");
+        $query = $con->prepare("SELECT * FROM users WHERE email = ?");
         $query->execute(array($email));
-        if ($query->rowCount() > 0) {
+        if ($query->rowCount() > 0) 
+        {
             $data = $query->fetchAll(PDO::FETCH_ASSOC)[0];
             if ($password === $data['password']) {
                 $_SESSION['user'] = array(
@@ -30,21 +26,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             } else {
                 $error = "Invalid Email/Password.";
             }
-        } else {
-            $error = "Email Does Not Exist.";
         }
+            header('Location: profile.php');
 
 }
+
 ?>
+
+ 		<!--Start Navbar-->
+        
+		<!--End Navbar-->
 
 		<div class="Container">
 			<div class="row">
 				<div class="col-xs-8">
-                    <?php if (isset($error)) {?>
-                    <div class="alert alert-danger text-center">
-                        <?php echo $error;?>
-                    </div>
-                    <?php } ?>
 					<form style="border:5px; margin-top: 120px;" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
 						<div class="form-group">
 							<label for="email">Email address</label>
@@ -59,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 					</form>
 				</div>
 			</div>
-        </div>
 
-<?php require_once "partials/footer.php"; ?>
+<?php
+require_once "partials/footer.php";
+?>

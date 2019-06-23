@@ -1,4 +1,8 @@
 <?php
+require_once '../partials/init.php';
+
+
+
 
 /**
  * Library Requirements
@@ -12,7 +16,6 @@ if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
     throw new \Exception('please run "composer require google/apiclient:~2.0" in "' . __DIR__ .'"');
 }
 require_once __DIR__ . '/vendor/autoload.php';
-require_once '../partials/init.php';
 
     /*
      * Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
@@ -26,12 +29,14 @@ require_once '../partials/init.php';
 
     // Define an object that will be used to make all API requests.
     $youtube = new Google_Service_YouTube($client);
+
     $videos = array();
     try {
 
         // Call the search.list method to retrieve results matching the specified
         // query term.
         $query = isset($_GET['q']) ? $_GET['q'] : 'hole';
+        
         $searchResponse = $youtube->search->listSearch('id,snippet', array(
             'q' => $query,
             'maxResults' => 5 ,
@@ -39,14 +44,17 @@ require_once '../partials/init.php';
             'videoCategoryId' => 27 ,   //education
         ));
 
+
         $videos = [];
 
         foreach ($searchResponse['items'] as $searchResult) {
+
 
             $title = $searchResult['snippet']['title'];
             $img = $searchResult['snippet']['thumbnails']['default']['url'];
             $videoId = $searchResult['id']['videoId'];
             $description = $searchResult['snippet']['description'];
+
             $video = array(
                 'title'=>$title,
                 'description'=>$description,
@@ -54,12 +62,15 @@ require_once '../partials/init.php';
                 'category'=>'Education',
                 'id' => $videoId
             );
+
             array_push($videos, $video);
             if (!checkDB('videos', 'youtube_id', $videoId))
             {
                 $query = $con->prepare("INSERT INTO `videos` (`youtube_id`,`title`,`description`,`img`) VALUES (?,?,?,?)");
                 $query->execute(array($videoId, $title, $description, $img));
+
             }
+                
         }
 
         $searchResponse = $youtube->search->listSearch('id,snippet', array(
@@ -82,6 +93,7 @@ require_once '../partials/init.php';
                 'category'=>'Science & Technology',
                 'id' => $videoId
             );
+            
             array_push($videos,$video);
             if (!checkDB('videos', 'youtube_id', $videoId))
             {

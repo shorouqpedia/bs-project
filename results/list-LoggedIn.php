@@ -12,30 +12,7 @@ if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
     throw new \Exception('please run "composer require google/apiclient:~2.0" in "' . __DIR__ .'"');
 }
 require_once __DIR__ . '/vendor/autoload.php';
-
-$htmlBody = <<<END
-
-<!--
-<form method="GET">
-  <div>
-    Search Term: <input type="search" id="q" name="q" placeholder="Enter Search Term">
-  </div>
-  <div>
-    Max Results: <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="25">
-  </div>
-  <div>
-    Category: 
-    <select name="category">
-        <option value="27">Education</option>
-        <option value="28">Science & Technology</option>
-    </select>
-  </div>
-  <input type="submit" value="Search">
-</form>
--->
-
-END;
-
+require_once '../partials/init.php';
 
 $DEVELOPER_KEY = 'AIzaSyCU2BfMC9HnMvUMXm2pUhjGUBR8UPNzue8';
 
@@ -208,6 +185,7 @@ END;
 
 ?>
 <?php require_once "../partials/headers.php";?>
+    <h2 class="text-center" style="padding:10px 0 15px 0">Results for word: <strong><?php echo $query;?></strong></h2>
         <?php foreach($videos as $video) { ?>
 		<!--First Video-->
         <div class="row" style="padding: 100px; padding-left: 200px; padding-bottom: 0px; margin-bottom: 50px;padding-top: 0px;">

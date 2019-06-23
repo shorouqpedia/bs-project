@@ -1,30 +1,22 @@
+<?php $title = isset($title) ? $title : "DSheldon"; ?>
 <html>
 <head>
-    <title>Navbar-NoLogIn</title>
+    <title><?php echo ucwords($title);?></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Second Meta is Internet Explorer Compatibility and second is Third Mobile Meta -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="<?php echo $styles_path; ?>/bootstrap.css">
+    <link rel="stylesheet" href="<?php echo $styles_path; ?>/style.css">
+    <?php if (isset($styles)) { ?>
+        <?php foreach($styles as $style) { ?>
+            <link rel="stylesheet" href="<?php echo $styles_path; ?>/<?php echo $style;?>.css">
+        <?php } ?>
+    <?php } ?>
 </head>
 <body>
 <!--Start Navbar-->
-<html>
-<head>
-    <title>Sign Up</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Second Meta is Internet Explorer Compatibility and second is Third Mobile Meta -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
-
-</head>
-<body>
-<!--Start Navbar-->
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" <?php echo $title == "homepage" ? "style='background:none;'" : '';?>>
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -38,12 +30,12 @@
         </div>
 
         <div class="navbar-header">
-            <a class="navbar-brand" href="#"> <img src="images/DS2.png"> </a>
+            <a class="navbar-brand" href="<?php echo $server_base;?>"> <img src="<?php echo $images_path;?>/DS2.png"> </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left" style="padding-top: 8px" method="get" action="results/list-loggedIn.php">
+            <form class="navbar-form navbar-left" style="padding-top: 8px" method="get" action="<?php echo $server_base;?>/results/list-loggedIn.php">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="input-group">
@@ -57,15 +49,28 @@
                     </div><!-- /.col-lg-6 -->
                 </div>
             </form>
+            <?php if ($title != 'homepage') { ?>
             <ul class="nav navbar-nav navbar-right"> <!--It took navbar right so it went right-->
-                <p>
-                    <button type="button" class="btn btn-default" onclick="location.href='login.html'" style="margin-top: 2px;width: 120px">Log In</button> <!--Edit-->
-                </p>
+                <?php if (!isset($_SESSION['user'])) { ?>
+                    <?php if (isset($is_signup) && $is_signup) {?>
+                    <li>
+                        <button type="button" class="btn btn-default" onclick="location.href='<?php echo $server_base;?>/login.php'" style="margin-top: 2px;width: 120px">Log In</button> <!--Edit-->
+                    </li>
+                    <?php } else { ?>
+                    <li>
+                        <button type="button" class="btn btn-default" onclick="location.href='<?php echo $server_base;?>/signup.php'" style="margin-top: 2px;width: 120px">Sign Up</button> <!--Edit-->
+                    </li>
+                    <?php } ?>
+                <?php } else { ?>
+                    <li>
+                        <button type="button" class="btn btn-default" onclick="location.href='<?php echo $server_base;?>/profile.php'" style="margin-top: 2px;width: 120px">Profile</button> <!--Edit-->
+                    </li>
+                <?php } ?>
             </ul>
+            <?php } ?>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
     <!-- End of the Container-->
-    </div>
 </nav>
 <!--End Navbar-->
 

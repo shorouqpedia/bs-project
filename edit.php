@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 					<div class="row">
 						<div class="">
 							<div class="profile-userpic" style="margin-top: 150px;">
-							    <img style="width:100%" src="<?php echo $user['profile_picture'];?>" alt="..." id="item">
+							    <img style="width:100%;max-height:300px;" src="<?php echo $user['profile_picture'];?>" alt="..." id="item">
 							</div>
 						</div>
 					</div>

@@ -165,7 +165,7 @@ require_once __DIR__ . '/vendor/autoload.php';
     <h2 class="text-center" style="padding:10px 0 15px 0">Results for word: <strong><?php echo $query;?></strong></h2>
     <?php foreach($videos as $video) { ?>
     <!--First Video-->
-    <div class="row" style="padding: 100px; padding-left: 200px; padding-bottom: 0px; margin-bottom: 50px;padding-top: 0px;">
+    <div class="row" style="padding: 0 0 0 200px; margin-bottom: 50px;">
         <div>
             <div class="col-sm-4 col-md-2" style="top:20">
                 <div class="thumbnail">

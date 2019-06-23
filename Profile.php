@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 $user = $_SESSION['user'];
-$title = "Profile";
+$title = "profile";
 require_once "partials/headers.php";
 ?>
 <div class="container" style="margin-top: 70px;">

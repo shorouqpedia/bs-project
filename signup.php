@@ -3,6 +3,7 @@
 <?php $is_signup = true; ?>
 <?php
     session_start();
+    $title = "signup";
     if (isset($_SESSION['user'])) {
         header('Location:profile.php');
         exit();
@@ -24,11 +25,16 @@ if (isset($error)) {unset($error);}
             $query = $con->prepare("INSERT INTO `user` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
             $query->execute(array($fname, $lname, $email, $password, $img));
             if ($query->rowCount() > 0) {
+                $query2 = $con->prepare("SELECT * FROM `user` WHERE `email`=?");
+                $query2->execute(array($email));
+                $id = $query2->fetchAll(PDO::FETCH_ASSOC)[0]['id'];
                 $_SESSION['user'] = array(
                     "email" => $email,
                     "first_name" => $fname,
                     "last_name" => $lname,
-                    "profile_picture" => $img
+                    "profile_picture" => $img,
+                    "bio" => "",
+                    "id" => $id
                 );
                 header('Location:profile.php');
                 exit();

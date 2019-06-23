@@ -21,7 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     "email" => $email,
                     "first_name" => $data['fname'],
                     "last_name" => $data['lname'],
-                    "profile_picture" => $data['img']
+                    "profile_picture" => $data['img'],
+                    "bio" => "",
+                    "id" => $data['id']
                 );
                 header('Location: profile.php');
 

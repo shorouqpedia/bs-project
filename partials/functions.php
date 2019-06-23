@@ -5,7 +5,7 @@ function checkDB($table,$col,$item) {
     $query->execute(array($item));
     return $query->rowCount() > 0;
 }
-function onVideoUpload($id, $user_rating) {
+function onVideoRating($id, $user_rating) {
 
     global $con;
     //Get Current Video Data
@@ -23,7 +23,7 @@ function onVideoUpload($id, $user_rating) {
     return $query->rowCount() > 0;
 }
 function upload_files($file) {
-    $target_dir = substr(__DIR__, 0, -8). "images/uploads/profile/";
+    $target_dir = "images/uploads/profile/";
     echo $target_dir;
     $target_file = $target_dir . basename($file["name"]);
     $uploadOk = 1;
@@ -67,4 +67,33 @@ function upload_files($file) {
         }
     }
     return $uploadOk ? $target_file : false;
+}
+function get_categories_info()
+{
+    $DEVELOPER_KEY = 'AIzaSyCU2BfMC9HnMvUMXm2pUhjGUBR8UPNzue8';
+
+
+    /**/
+    $categoriesUrl = "https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key=" . $DEVELOPER_KEY;
+    /*
+     * Send Request and receive data
+     * */
+    $ch = curl_init();  // prepare the url
+
+//Set the URL that you want to GET by using the CURLOPT_URL option.
+    curl_setopt($ch, CURLOPT_URL, $categoriesUrl);
+
+//Set CURLOPT_RETURNTRANSFER so that the content is returned as a variable.
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+//Set CURLOPT_FOLLOWLOCATION to true to follow redirects.
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+//Execute the request.
+    $data = curl_exec($ch);
+
+//Close the cURL handle.
+    curl_close($ch);
+    $dataArray = json_decode($data);
+    return json_encode($dataArray);
 }

@@ -1,7 +1,4 @@
 <?php $title = isset($title) ? $title : "DSheldon"; ?>
-<?php
-
-?>
 <html>
 <head>
     <title><?php echo ucwords($title);?></title>
@@ -38,7 +35,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left" style="padding-top: 8px" method="get" action="<?php echo $server_base;?>/results/list-loggedIn.php">
+            <form class="navbar-form navbar-left" style="padding-top: 8px" method="get" action="<?php echo $server_base;?>/results/results.php">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="input-group">

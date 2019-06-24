@@ -22,9 +22,16 @@ function onVideoRating($id, $user_rating) {
 
     return $query->rowCount() > 0;
 }
-function upload_files($file) {
-    $target_dir = "images/uploads/profile/";
-    echo $target_dir;
+function upload_files($file, $type) {
+    if ($type == "image") {
+
+        $target_dir = "images/uploads/profile/";
+        $max_size = 500000;
+
+    } else if ($type == "video") {
+        $target_dir = "uploads/videos/";
+        $max_size = 100000000;
+    }
     $target_file = $target_dir . basename($file["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -45,15 +52,22 @@ function upload_files($file) {
         $uploadOk = 0;
     }
     // Check file size
-    if ($file["size"] > 500000) {
+    if ($file["size"] > $max_size) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
     // Allow certain file formats
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif" ) {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        $uploadOk = 0;
+    if ($type == "image") {
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif") {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+    } else if ($type == "video") {
+        if ($imageFileType != "mp4" && $imageFileType != "avi" && $imageFileType != "ogg") {
+            echo "Sorry, only MP4, AVI & OGG files are allowed.";
+            $uploadOk = 0;
+        }
     }
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
@@ -95,4 +109,8 @@ function get_categories_info()
     curl_close($ch);
     $dataArray = json_decode($data);
     return json_encode($dataArray);
+}
+function includeFileWithVariables($fileName, $variables) {
+    extract($variables);
+    include($fileName);
 }

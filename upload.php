@@ -1,52 +1,26 @@
-<html>
-	<head>
- 		<title>Upload Video</title>
- 		<meta charset="utf-8">
- 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<!-- Second Meta is Internet Explorer Compatibility and second is Third Mobile Meta -->
-    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- 		<link rel="stylesheet" href="D:\Graduation Project\BS Project\css\bootstrap.css">
- 		<link rel="stylesheet" href="css\style.css">
- 		
- 	</head>
- 	<body>
- 		<!--Start Navbar-->
-		<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
-			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
-			    <div class="navbar-header">
-			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="		#bs-example-navbar-collapse-1" aria-expanded="false">
-			        <span class="sr-only">Toggle navigation</span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			      </button>   
-			    </div>
-			    <!-- Collect the nav links, forms, and other content for toggling -->
-			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				    <div class="navbar-header">
-				      <a class="navbar-brand" href="#"> <img src="images/DS2.png"> </a>
-				    </div>
-				    <form class="navbar-form navbar-left" style="padding-top: 8px">
-				    	<div class="row">
-							<div class="col-lg-6">
-								<div class="input-group">
-									<span class="input-group-btn">
-									    <button type="button" class="btn btn-default" aria-label="Left Align">
-	  										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-										</button>
-									</span>
-								    <input type="text" class="form-control" placeholder="Search for...">
-								</div><!-- /input-group -->
-							</div><!-- /.col-lg-6 -->
-						</div>
-				    </form>	
-				</div><!-- /.navbar-collapse -->
-			</div><!-- /.container-fluid -->
-			  <!-- End of the Container-->
-		</nav>
-		<!--End Navbar-->
+<?php
+session_start();
+require_once 'partials/init.php';
+if (!isset($_SESSION['user'])) {
+    header('Location:login.php');
+    exit();
+}
+$user = $_SESSION['user'];
+$title = "upload videos";
+require_once "partials/headers.php";
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $post = filter_var_array($_POST, FILTER_SANITIZE_STRING);
+    $title = $post['title'];
+    $description = $post['description'];
+    $category = $post['category'];
+    $vid = $_FILES['video'];
+    var_dump($_POST);
+    $file_upload = upload_files($vid, "video");
+    $query = $con->prepare("INSERT INTO `videos` (`title`,`description`,`category`,`video_link`,`user_upload_id`) VALUES (?,?,?,?,?)");
+    $query->execute(array($title,$description,$category,$file_upload, $user['id']));
+    header("Location: profile.php");
+}
+?>
 		<div class="Container">
 			<div class="row">
 				<div class="col-xs-4">
@@ -58,47 +32,38 @@
 					</div>
 			
 				</div>
-				<div class="col-xs-4">
-					<form style="border:5px; margin-top: 120px;">
+				<div class="col-xs-8">
+					<form style="border:5px; margin-top: 120px;" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" enctype="multipart/form-data">
+                            <div style="display:flex;align-items:flex-end;justify-content:space-between">
+                                <div class="form-group" style="flex-grow:1">
+                                    <label for="exampleInputName1">Video Title</label>
+                                    <input name="title" type="text" class="form-control" id="exampleInputName1" placeholder="Video Title...">
+                                </div>
+                                <div class="form-group" style="width:165px;margin-left:20px;">
+                                    <select name="category" class="form-control">
+                                        <option selected disabled>Category</option>
+                                        <option value="physics">Physics</option>
+                                        <option value="maths">Mathematics</option>
+                                        <option value="cs">Computer Science</option>
+                                        <option value="philosophy">Philosophy</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                        </div>
 						<div class="form-group">
-						    <label for="exampleInputName1">Video Title</label>
-						    <input type="text" class="form-control" id="exampleInputName1" placeholder="Video Title...">
-						</div>
-						<div class="form-group">
-						    <label for="exampleInputName1">Description</label><br/>
-						    <textarea placeholder="Description..." style="height: 150px; width: 360px;padding: 6px 12px;line-height: 1.42857143;color: #555;background-color: #fff;background-image: none;border: 1px solid #ccc;border-radius: 4px;transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;"></textarea>
+						    <label for="exampleInputName2">Description</label><br/>
+						    <textarea class="form-control" name="description" placeholder="Description..." rows="5" style="resize:vertical" id="exampleInputName2"></textarea>
 						</div>
 						<div class="form-group">
 						    <label for="exampleInputFile">Upload</label>
-						    <input type="file" id="exampleInputFile">
+						    <input name="video" type="file" id="exampleInputFile">
 						    <p class="help-block">Choose the video you want to upload</p>
 						</div>
 						<button type="submit" class="btn btn-success" style="width:150px;">Post</button>
-						<button type="button" class="btn btn-default">Cancel</button>
+						<button type="reset" class="btn btn-default">Cancel</button>
 					</form>
 				</div>
-				<div class="col-xs-">
-					
-				</div>
 			</div>
-			<!-- Single button -->
-					<div class="btn-group" style="position: absolute; top: 145px; right: 400px">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    	Category <span class="caret"></span>
-					  	</button>
-						<ul class="dropdown-menu">
-						    <li><a href="#">Physics</a></li>
-						    <li><a href="#">Mathematics</a></li>
-						    <li><a href="#">Computer Science</a></li>
-						    <li><a href="#">Phylosophy</a></li>
-						    <li role="separator" class="divider"></li>
-						    <li><a href="#">Other</a></li>
-
-						</ul>
-					</div>
 		</div>
-
- 		<script src="js\jquery-1.11.1.min.js"></script>
- 		<script src="js\bootstrap.min.js"></script>
- 	</body>
-</html>
+<?php
+require_once "partials/footer.php";

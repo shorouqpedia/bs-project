@@ -21,7 +21,7 @@ if (isset($error)) {unset($error);}
             $fname = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
             $lname = filter_var($_POST['lname'], FILTER_SANITIZE_STRING);
             $password = sha1(filter_var($_POST['pass'], FILTER_SANITIZE_STRING));
-            $file_upload = upload_files($_FILES['img']);
+            $file_upload = upload_files($_FILES['img'], "image");
             $img = $file_upload ? $file_upload : "images/Anon.png";
             $query = $con->prepare("INSERT INTO `users` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
             $query->execute(array($fname, $lname, $email, $password, $img));

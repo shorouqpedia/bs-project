@@ -60,7 +60,23 @@ require_once "partials/headers.php";
         </div>
         <div class="col-md-9">
             <div class="profile-content">
-               Some user related content goes here...
+                <?php
+                $query = $con->prepare("SELECT * FROM `videos` WHERE `user_upload_id`=?");
+                $query->execute(array($user['id']));
+                if ($query->rowCount() > 0) {
+                    $videos = $query->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($videos as $video) {
+                        includeFileWithVariables("partials/video-row-template.php", array(
+                            "id" => $video['id'],
+                            "title" => $video['title'],
+                            "description" => $video['description'],
+                            "img" => $video['img']
+                        ));
+                    }
+                } else {
+                ?>
+                    <h2>No Uploaded Videos</h2>
+                <?php } ?>
             </div>
         </div>
     </div>

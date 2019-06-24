@@ -1,0 +1,180 @@
+<?php
+require_once '../partials/init.php';
+
+
+
+
+/**
+ * Library Requirements
+ *
+ * 1. Install composer (https://getcomposer.org)
+ * 2. On the command line, change to this directory (api-samples/php)
+ * 3. Require the google/apiclient library
+ *    $ composer require google/apiclient:~2.0
+ */
+if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+    throw new \Exception('please run "composer require google/apiclient:~2.0" in "' . __DIR__ .'"');
+}
+require_once __DIR__ . '/vendor/autoload.php';
+
+    /*
+     * Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
+     * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
+     * Please ensure that you have enabled the YouTube Data API for your project.
+     */
+
+    $client = new Google_Client();
+    $client->setDeveloperKey($DEVELOPER_KEY);
+
+    // Define an object that will be used to make all API requests.
+    $youtube = new Google_Service_YouTube($client);
+
+    $videos = array();
+    try {
+
+        // Call the search.list method to retrieve results matching the specified
+        // query term.
+        $query_search = isset($_GET['q']) ? $_GET['q'] : 'hole';
+        
+        $searchResponse = $youtube->search->listSearch('id,snippet', array(
+            'q' => $query_search,
+            'maxResults' => 5 ,
+            'type' => 'video',
+            'videoCategoryId' => 27 ,   //education
+        ));
+
+
+        $videos = [];
+
+        foreach ($searchResponse['items'] as $searchResult) {
+
+
+            $title = $searchResult['snippet']['title'];
+            $img = $searchResult['snippet']['thumbnails']['default']['url'];
+            $videoId = $searchResult['id']['videoId'];
+            $description = $searchResult['snippet']['description'];
+
+            $video = array(
+                'title'=>$title,
+                'description'=>$description,
+                'img'=>$img,
+                'category'=>'Education',
+                'id' => $videoId
+            );
+
+            array_push($videos, $video);
+            if (!checkDB('videos', 'youtube_id', $videoId))
+            {
+                $query = $con->prepare("INSERT INTO `videos` (`youtube_id`,`title`,`description`,`img`) VALUES (?,?,?,?)");
+                $query->execute(array($videoId, $title, $description, $img));
+
+            }
+                
+        }
+
+        $searchResponse = $youtube->search->listSearch('id,snippet', array(
+            'q' => $query_search,
+            'maxResults' => 5 ,
+            'type' => 'video',
+            'videoCategoryId' => 28 ,   //education
+        ));
+        foreach ($searchResponse['items'] as $searchResult) {
+
+            $title = $searchResult['snippet']['title'];
+            $img = $searchResult['snippet']['thumbnails']['default']['url'];
+            $videoId = $searchResult['id']['videoId'];
+            $description = $searchResult['snippet']['description'];
+            $videoLink = 'https://www.youtube.com/watch?v=' . $videoId;
+            $video = array(
+                'title'=>$title,
+                'description'=>$description,
+                'img'=>$img,
+                'category'=>'Science & Technology',
+                'id' => $videoId
+            );
+            
+            array_push($videos,$video);
+            if (!checkDB('videos', 'youtube_id', $videoId))
+            {
+                $query = $con->prepare("INSERT INTO `videos` (`youtube_id`,`title`,`description`,`img`) VALUES (?,?,?,?)");
+                $query->execute(array($videoId, $title, $description, $img));
+            }
+        }
+
+    } catch (Google_Service_Exception $e) {
+        echo htmlspecialchars($e->getMessage());
+    } catch (Google_Exception $e) {
+        echo htmlspecialchars($e->getMessage());
+    }
+
+
+?>
+<?php require_once "../partials/headers.php";?>
+<div style="margin-top:70px"></div>
+<?php if (isset($_GET['id'])) { ?>
+    <?php
+    $i = 0;
+        foreach ($videos as $video) {
+            if ($video['id'] == $_GET['id']) {
+                $current_video = $video;
+                array_splice($videos, $i, 1);
+                break;
+            }
+            $i++;
+        }
+    ?>
+    <div class="row">
+        <div class="col-sm-7" style="padding-top: 40px; padding-left: 40px;">
+            <!-- 16:9 aspect ratio -->
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $current_video['id'];?>?rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="col-sm-5" style="padding-top: 50px; padding-right: 50px;">
+            <div class="panel panel-warning">
+                <div class="panel-footer">
+                    <b><h4><?php echo $current_video['title'];?></h4></b>
+                    <?php if (isset($_SESSION['user'])) { ?>
+                    <div>
+                        <div class="rating">
+                            <span class="rating-star" data-value="5"></span>
+                            <span class="rating-star" data-value="4"></span>
+                            <span class="rating-star" data-value="3"></span>
+                            <span class="rating-star" data-value="2"></span>
+                            <span class="rating-star" data-value="1"></span>
+                        </div>
+
+                        <script>
+                        document.body.onload = function () {
+                            $('.rating-star').click(function() {
+                                $(this).parents('.rating').find('.rating-star').removeClass('checked');
+                                $(this).addClass('checked');
+
+                                var submitStars = $(this).attr('data-value');
+                            });
+                        };
+                        </script>
+                    </div>
+                    <?php } ?>
+                </div>
+                <div class="panel-body" style="/*background-color: rgba(252, 253, 149, 0.3)*/"><?php echo $current_video['description'];?></div>
+            </div>
+
+        </div>
+    </div>
+
+
+<?php } ?>
+    <h2 class="text-center" style="padding:10px 0 15px 0">Results for word: <strong><?php echo $query_search;?></strong></h2>
+    <?php
+    foreach($videos as $video) {
+        includeFileWithVariables("../partials/video-row-template.php", array(
+            "id" => $video['id'],
+            "title" => $video['title'],
+            "description" => $video['description'],
+            "img" => $video['img'],
+            "watch_link" => $_SERVER['PHP_SELF'] . '?q=' . $query_search . '&id=' . $video['id']
+        ));
+    }
+    ?>
+<?php require_once "../partials/footer.php";?>

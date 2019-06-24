@@ -70,7 +70,6 @@ function upload_files($file) {
 }
 function get_categories_info()
 {
-    $DEVELOPER_KEY = 'AIzaSyCU2BfMC9HnMvUMXm2pUhjGUBR8UPNzue8';
 
 
     /**/

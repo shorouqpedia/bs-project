@@ -22,7 +22,6 @@ require_once __DIR__ . '/vendor/autoload.php';
      * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
      * Please ensure that you have enabled the YouTube Data API for your project.
      */
-    $DEVELOPER_KEY = 'AIzaSyCU2BfMC9HnMvUMXm2pUhjGUBR8UPNzue8';
 
     $client = new Google_Client();
     $client->setDeveloperKey($DEVELOPER_KEY);
@@ -35,10 +34,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 
         // Call the search.list method to retrieve results matching the specified
         // query term.
-        $query = isset($_GET['q']) ? $_GET['q'] : 'hole';
+        $query_search = isset($_GET['q']) ? $_GET['q'] : 'hole';
         
         $searchResponse = $youtube->search->listSearch('id,snippet', array(
-            'q' => $query,
+            'q' => $query_search,
             'maxResults' => 5 ,
             'type' => 'video',
             'videoCategoryId' => 27 ,   //education
@@ -74,7 +73,7 @@ require_once __DIR__ . '/vendor/autoload.php';
         }
 
         $searchResponse = $youtube->search->listSearch('id,snippet', array(
-            'q' => $query,
+            'q' => $query_search,
             'maxResults' => 5 ,
             'type' => 'video',
             'videoCategoryId' => 28 ,   //education
@@ -111,13 +110,17 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 ?>
 <?php require_once "../partials/headers.php";?>
+<div style="margin-top:70px"></div>
 <?php if (isset($_GET['id'])) { ?>
     <?php
+    $i = 0;
         foreach ($videos as $video) {
             if ($video['id'] == $_GET['id']) {
                 $current_video = $video;
+                array_splice($videos, $i, 1);
                 break;
             }
+            $i++;
         }
     ?>
     <div class="row">
@@ -162,7 +165,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 
 <?php } ?>
-    <h2 class="text-center" style="padding:10px 0 15px 0">Results for word: <strong><?php echo $query;?></strong></h2>
+    <h2 class="text-center" style="padding:10px 0 15px 0">Results for word: <strong><?php echo $query_search;?></strong></h2>
     <?php foreach($videos as $video) { ?>
     <!--First Video-->
     <div class="row" style="padding: 0 0 0 200px; margin-bottom: 50px;">
@@ -178,7 +181,7 @@ require_once __DIR__ . '/vendor/autoload.php';
                     <p><?php echo $video['description'];?></p>
 
                     <div class="btn btn-primary">
-                        <a href="<?php echo $_SERVER['PHP_SELF'].'?id=' . $video['id'];?>">Watch</a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'].'?q=' . $query_search . '&id=' . $video['id'];?>">Watch</a>
                     </div>
                 </div>
             </div>

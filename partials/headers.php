@@ -44,7 +44,7 @@
   											<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 										</button>
 								    </span>
-                            <input type="text" name="q" class="form-control" placeholder="Search for...">
+                            <input type="text" name="q" class="form-control" placeholder="Search for..." value="<?php echo isset($_GET['q']) ? $_GET['q'] : '';?>">
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
                 </div>

@@ -58,10 +58,13 @@ if (isset($error)) {unset($error);}
     </style>
 
         <div class="Container">
+            <?php if (isset($error)) { ?>
+                <div class="alert alert-danger"><?php echo $error;?></div>
+            <?php } ?>
             <div class="row">
                 <div class="col-xs-6 col-md-3">
                     <div class="profile-userpic" style="margin-top: 150px;margin-left: 50px;">
-                        <img src="images/Anon.png" alt="..." id="item">
+                        <img src="<?php echo $images_path;?>/Anon.png" alt="..." id="item">
                     </div>
                 </div>
                 <div class="col-xs-8">

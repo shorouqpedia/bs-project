@@ -38,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		<!--End Navbar-->
 
 		<div class="Container">
+            <?php if (isset($error)) { ?>
+                <div class="alert alert-danger"><?php echo $error;?></div>
+            <?php } ?>
 			<div class="row">
 				<div class="col-xs-8">
 					<form style="border:5px; margin-top: 120px;" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">

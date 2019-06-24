@@ -71,23 +71,23 @@ if (isset($error)) {unset($error);}
                     <form style="border:5px; margin-top: 120px;" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
                         <div class="form-group">
                             <label for="exampleInputName1">First name</label>
-                            <input type="text" name="fname" class="form-control" id="exampleInputName1" placeholder="First Name">
+                            <input required type="text" name="fname" class="form-control" id="exampleInputName1" placeholder="First Name">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputName1">Last name</label>
-                            <input type="text" name="lname" class="form-control" id="exampleInputName2" placeholder="Last Name">
+                            <input required type="text" name="lname" class="form-control" id="exampleInputName2" placeholder="Last Name">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                            <input required type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <input required type="password" name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword2">Confirm Password</label>
-                            <input type="password" name="passc" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password">
+                            <input required type="password" name="passc" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Profile photo</label>
@@ -96,7 +96,7 @@ if (isset($error)) {unset($error);}
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="terms"> Agree on Our Terms of Privacy & Use.
+                                <input required type="checkbox" name="terms"> Agree on Our Terms of Privacy & Use.
                             </label>
                         </div>
                         <button type="submit" class="btn btn-warning" style="width:150px;">Submit</button>

@@ -20,7 +20,7 @@ if (isset($error)) {unset($error);}
         if (!checkDB('users', 'email', $email)) {
             $fname = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
             $lname = filter_var($_POST['lname'], FILTER_SANITIZE_STRING);
-            $password = sha1(filter_var($_POST['pass'], FILTER_SANITIZE_STRING));
+            $password = sha1($_POST['pass']);
             $file_upload = upload_files($_FILES['img'], "image");
             $img = $file_upload ? $file_upload : "images/Anon.png";
             $query = $con->prepare("INSERT INTO `users` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
@@ -80,7 +80,11 @@ if (isset($error)) {unset($error);}
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="pass2" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <input type="password" name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword2">Confirm Password</label>
+                            <input type="password" name="passc" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Profile photo</label>
@@ -89,7 +93,7 @@ if (isset($error)) {unset($error);}
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> DELETE IF NOT NEEDED
+                                <input type="checkbox" name="terms"> Agree on Our Terms of Privacy & Use.
                             </label>
                         </div>
                         <button type="submit" class="btn btn-warning" style="width:150px;">Submit</button>

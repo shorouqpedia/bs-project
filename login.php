@@ -1,12 +1,12 @@
 <?php
+session_start();
 require_once "partials/init.php";
 $is_login = true;
-session_start();
 require_once "partials/headers.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
         $email = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
-        $password = sha1(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
+        $password = sha1($_POST['password']);
 
         $query = $con->prepare("SELECT * FROM `users` WHERE `email` = ?");
         $query->execute(array($email));

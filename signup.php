@@ -17,16 +17,16 @@ if (isset($error)) {unset($error);}
 
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
-        if (!checkDB('user', 'email', $email)) {
+        if (!checkDB('users', 'email', $email)) {
             $fname = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
             $lname = filter_var($_POST['lname'], FILTER_SANITIZE_STRING);
             $password = sha1(filter_var($_POST['pass'], FILTER_SANITIZE_STRING));
             $file_upload = upload_files($_FILES['img']);
             $img = $file_upload ? $file_upload : "images/Anon.png";
-            $query = $con->prepare("INSERT INTO `user` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
+            $query = $con->prepare("INSERT INTO `users` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
             $query->execute(array($fname, $lname, $email, $password, $img));
             if ($query->rowCount() > 0) {
-                $query2 = $con->prepare("SELECT * FROM `user` WHERE `email`=?");
+                $query2 = $con->prepare("SELECT * FROM `users` WHERE `email`=?");
                 $query2->execute(array($email));
                 $id = $query2->fetchAll(PDO::FETCH_ASSOC)[0]['id'];
                 $_SESSION['user'] = array(
@@ -56,31 +56,7 @@ if (isset($error)) {unset($error);}
             border-radius: 50% !important;
         }
     </style>
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
 
-        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-
-        if (!checkDB('user', 'email', $email))
-        {
-
-            $fname = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
-            $lname = filter_var($_POST['lname'], FILTER_SANITIZE_STRING);
-            $password = sha1(filter_var($_POST['pass2'], FILTER_SANITIZE_STRING));
-            $img=0;
-            $query = $con->prepare("INSERT INTO `user` (`fname`,`lname`, `email`, `password`, `img`) VALUES (?,?,?,?,?)");
-            $query->execute(array($fname, $lname, $email, $password, $img));
-            if ($query->rowCount() > 0) 
-            {
-                header('Location:bs/index.php');
-                exit();
-            }
-        }
-        else 
-            ?>
-        <h2 style="margin-top: 80px; text-align: center">Already Exists</h2>
-<?php } else { ?>
         <div class="Container">
             <div class="row">
                 <div class="col-xs-6 col-md-3">
@@ -123,4 +99,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             </div>
         </div>
 <?php require_once "partials/footer.php"?>
-<?php } ?>

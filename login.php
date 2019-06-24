@@ -1,18 +1,19 @@
 <?php
 require_once "partials/init.php";
+$is_login = true;
+session_start();
 require_once "partials/headers.php";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
         $email = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
         $password = sha1(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
 
-        $query = $con->prepare("SELECT * FROM users WHERE email = ?");
+        $query = $con->prepare("SELECT * FROM `users` WHERE `email` = ?");
         $query->execute(array($email));
         if ($query->rowCount() > 0) 
         {
             $data = $query->fetchAll(PDO::FETCH_ASSOC)[0];
-            if ($password === $data['password']) {
+            if ($password == $data['password']) {
                 $_SESSION['user'] = array(
                     "email" => $email,
                     "first_name" => $data['fname'],
@@ -22,13 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     "id" => $data['id']
                 );
                 header('Location: profile.php');
+                exit();
 
             } else {
                 $error = "Invalid Email/Password.";
             }
         }
-            header('Location: profile.php');
-
 }
 
 ?>

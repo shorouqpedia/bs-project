@@ -124,13 +124,13 @@ require_once __DIR__ . '/vendor/autoload.php';
         }
     ?>
     <div class="row">
-        <div class="col-sm-7" style="padding-top: 110px; padding-left: 40px;">
+        <div class="col-sm-7" style="padding-top: 40px; padding-left: 40px;">
             <!-- 16:9 aspect ratio -->
             <div class="embed-responsive embed-responsive-16by9">
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $current_video['id'];?>?rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-        <div class="col-sm-5" style="padding-top: 120px; padding-right: 50px;">
+        <div class="col-sm-5" style="padding-top: 50px; padding-right: 50px;">
             <div class="panel panel-warning">
                 <div class="panel-footer">
                     <b><h4><?php echo $current_video['title'];?></h4></b>

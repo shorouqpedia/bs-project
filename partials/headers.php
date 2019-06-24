@@ -1,4 +1,7 @@
 <?php $title = isset($title) ? $title : "DSheldon"; ?>
+<?php
+
+?>
 <html>
 <head>
     <title><?php echo ucwords($title);?></title>
@@ -52,13 +55,14 @@
             <?php if ($title != 'homepage') { ?>
             <ul class="nav navbar-nav navbar-right"> <!--It took navbar right so it went right-->
                 <?php if (!isset($_SESSION['user'])) { ?>
-                    <?php if (isset($is_signup) && $is_signup) {?>
-                    <li>
-                        <button type="button" class="btn btn-default" onclick="location.href='<?php echo $server_base;?>/login.php'" style="margin-top: 2px;width: 120px">Log In</button> <!--Edit-->
-                    </li>
-                    <?php } else { ?>
+                    <?php if (!isset($is_signup)) {?>
                     <li>
                         <button type="button" class="btn btn-default" onclick="location.href='<?php echo $server_base;?>/signup.php'" style="margin-top: 2px;width: 120px">Sign Up</button> <!--Edit-->
+                    </li>
+                    <?php } ?>
+                    <?php if (!isset($is_login)) {?>
+                    <li>
+                        <button type="button" class="btn btn-default" onclick="location.href='<?php echo $server_base;?>/login.php'" style="margin-top: 2px;width: 120px">Log In</button> <!--Edit-->
                     </li>
                     <?php } ?>
                 <?php } else { ?>
